@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Vue-Learn</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input v-model='inputTodo' type="text">
+        <button @click="addTodo">提交</button>
+        <ul>
+            <todo-item v-for="(todo, index) in todolist" v-bind:content="todo" v-bind:index='index' v-bind:id="todo.id" @delete='deleteTodo'>
+            </todo-item>
+        </ul>
+    </div>
+
+
+    <script>
+
+
+        var TodoItem = {
+            props: ['content', 'index'],
+            template: '<li @click="todoItemClick">{{content.text}}</li>',
+            methods: {
+                todoItemClick: function (event) {
+                    // 将事件委托给父组件
+                    this.$emit('delete', event, this.index)
+                }
+            },
+        }
+
+        var app = new Vue({
+            el: '#app',
+            components: {
+                TodoItem: TodoItem,
+            },
+            data: {
+                todolist: [
+                    { id: 0, text: '学习 Vue' },
+                    { id: 1, text: '学习 Reatc' },
+                    { id: 2, text: '学习 RN' },
+                ],
+                inputTodo: '',
+            },
+
+            methods: {
+                addTodo: function (event) {
+                    var length = this.todolist.length
+                    this.todolist.push({ id: length, text: this.inputTodo })
+                    this.inputTodo = ''
+                },
+                deleteTodo: function (event, index) {
+                    this.todolist.splice(index, 1)
+                }
+            },
+
+
+
+        })
+    </script>
+</body>
+
+</html>
