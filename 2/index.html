@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Vue 生命周期函数</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">Vue Lifecycle</div>
+
+    <script>
+        var root = new Vue({
+            el: '#root',
+
+            // 优先级高于 el
+            template: '<div>{{message}}</div>',
+
+            data: {
+                message: 'Vue template'
+            },
+
+            beforeCreate: function () {
+                console.log('beforeCreate')
+            },
+            created: function () {
+                console.log('created')
+            },
+            beforeMount: function () {
+                console.log('beforeMount',this.$el)
+            },
+            mounted: function () {
+                console.log('mounted',this.$el)
+            },
+            beforeDestroy: function () {
+                console.log('beforeDestroy')
+            },
+            destroyed:function(){
+                console.log('destroyed')
+            },
+            beforeUpdate:function(){
+                console.log('beforeUpdate')
+            },
+            updated:function(){
+                console.log('updated')
+            },
+        })
+    </script>
+</body>
+
+
+
+</html>

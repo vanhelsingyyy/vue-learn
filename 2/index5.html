@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>列表渲染</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+    <div id='root'>
+        <div v-for='(item,index) of listLoop' 
+            :key='item.id'>
+            {{item.text}}---{{item.id}}
+        </div>
+        <div v-for='(item,key,index) of objLoop'
+             :key='index'>
+             {{item}}---{{key}}
+        </div>
+    </div>
+
+
+    <!-- 不能直接使用 listLoop[2] 获 objLoop.wigth = 130
+    这种方式对 Vue 中的列表和对象进行修改，无法动态更新页面
+    列表可使用 push() pop() shift() unshift() splice() sort() reverse()
+    或 Vue.set(listLoop,2,{id:789, text: Kotlin})
+    对象可使用 Vue.set(objLoop,wigth,130) -->
+    <script>
+        var app = new Vue({
+            el:'#root',
+            data: {
+                listLoop: [
+                    {id: '123', text:'HTML'},
+                    { id: '234', text: 'CSS' },
+                    { id: '567', text: 'JavaScript' },
+                ],
+                objLoop: {
+                    name: 'Vanhel',
+                    age: '26',
+                    six: 'man',
+                },
+            }
+        })
+    </script>
+</body>
+</html>

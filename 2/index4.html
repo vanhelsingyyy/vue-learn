@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>类型绑定</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+
+    <style>
+        .active {
+            color: red;
+        }
+        .size {
+            font-size: 6em;
+        }
+        .bg {
+            background: greenyellow;
+        }
+    </style>
+
+</head>
+<body>
+    <div id='root'>
+        
+        <!-- 类型对象和类型列表都可以使用计算属性 -->
+        <!-- 可以在类型列表里嵌套类型对象 -->
+        <div :class='[classObject,backgroundObject]' @click='classObjectClick'>类型对象语法</div>        
+        <div :class='[activeClass,sizeClass,backgroundClass]' @click='classListClick'>类型列表语法</div>
+
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#root',
+            data: {
+
+                classObject: {
+                    active: false,
+                    size: false,
+                },
+                activeClass: 'active',
+                sizeClass: 'size',
+            },
+            methods: {
+                classObjectClick: function (event) {
+                    var co = this.classObject
+                    co.active = !co.active
+                    co.size = !co.size
+                },
+                classListClick: function (event) {
+                   if (this.activeClass === 'active') {
+                       this.activeClass = ''
+                   } else {
+                       this.activeClass = 'active'
+                   }
+
+                   if (this.sizeClass === 'size') {
+                        this.sizeClass = ''
+                    } else {
+                        this.sizeClass = 'size'
+                    }
+                }
+            },
+            computed: {
+                backgroundObject: function () {
+                    console.log('backgroundObject');
+                    var co = this.classObject
+                    var background = {
+                        bg: (co.active && co.size) ? true: false
+                    }
+                    return background
+                },
+
+                backgroundClass: function () {
+                    return (this.activeClass && this.sizeClass) ? 'bg': '' 
+                }
+
+            }
+
+        })
+    </script>
+</body>
+</html>
